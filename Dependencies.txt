@@ -1,0 +1,13 @@
+Zahnrad Rechts Oben (Mit Dark und Light Mode)
+Es muss Scrollen könnnen
+
+MARKER:
+    Rund und klein
+    Wenn drauf --> Neue Seite (im selben Tab)
+        Mit Bild
+        Und Beschreibung
+
+
+
+Login?
+SQL?

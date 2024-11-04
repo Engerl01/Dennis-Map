@@ -6,6 +6,7 @@
 <title>Rusos Worldmap</title>
 <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
 <style>
+    /* Grundstil */
     body {
         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         margin: 0;
@@ -18,24 +19,9 @@
         background-color: #f5f5f5;
         transition: background-color 0.3s, color 0.3s;
     }
-    body.dark {
-        color: #ddd;
-        background-color: #121212;
-    }
-    h1 {
-        font-size: 2em;
-        color: #4CAF50;
-        margin-top: 20px;
-        font-weight: bold;
-        text-transform: uppercase;
-        letter-spacing: 1px;
-    }
-    p {
-        font-size: 1.1em;
-        color: #555;
-        margin-top: -10px;
-        font-style: italic;
-    }
+    body.dark { color: #ddd; background-color: #121212; }
+    h1 { font-size: 2em; color: #4CAF50; margin-top: 20px; font-weight: bold; letter-spacing: 1px; }
+    p { font-size: 1.1em; color: #555; margin-top: -10px; font-style: italic; }
     #map {
         height: 60vh;
         width: 80%;
@@ -45,52 +31,63 @@
         box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
         overflow: hidden;
     }
-    #settingsButton {
-        position: fixed;
-        top: 20px;
-        right: 20px;
-        font-size: 24px;
-        cursor: pointer;
-        color: #4CAF50;
-    }
-    #settingsMenu {
-        display: none;
-        position: fixed;
-        top: 50px;
-        right: 20px;
+
+    /* Styles für das Schritte-Abschnitt */
+    .steps-section {
+        width: 80%;
+        max-width: 1000px;
+        padding: 20px;
         background-color: #fff;
         border-radius: 8px;
-        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
-        text-align: left;
-        overflow: hidden;
+        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+        margin: 20px auto;
+        text-align: center;
     }
-    body.dark #settingsMenu { background-color: #333; color: #ddd; }
-    #settingsMenu button {
-        width: 100%;
-        padding: 10px;
-        background: none;
-        border: none;
-        color: inherit;
-        cursor: pointer;
-        text-align: left;
+    body.dark .steps-section { background-color: #333; color: #ddd; }
+    .steps-section h2 {
+        font-size: 1.8em;
+        color: #4CAF50;
+        margin-bottom: 20px;
     }
-    #loginModal {
-        display: none;
-        position: fixed;
-        top: 50%; left: 50%; transform: translate(-50%, -50%);
-        width: 300px; padding: 20px;
-        background-color: #fff; box-shadow: 0px 0px 10px rgba(0,0,0,0.5);
-        text-align: center; border-radius: 8px;
+    .steps-section ol {
+        list-style-type: none;
+        padding: 0;
+        display: flex;
+        justify-content: space-between;
     }
-    body.dark #loginModal { background-color: #333; color: #ddd; }
-    #loginModal h2 { color: #333; }
-    #loginModal input {
-        width: 80%; margin: 5px 0; padding: 8px; border: 1px solid #ddd;
+    .steps-section li {
+        flex: 1;
+        margin: 0 10px;
+        padding: 20px;
+        background-color: #f9f9f9;
+        border-radius: 8px;
+        box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s;
     }
-    #loginModal button {
-        padding: 10px; color: white;
-        background-color: #4CAF50; border: none;
-        border-radius: 5px; cursor: pointer;
+    body.dark .steps-section li { background-color: #444; }
+    .steps-section li:hover { transform: scale(1.05); }
+    .steps-section img {
+        width: 50px;
+        height: 50px;
+        margin-bottom: 15px;
+    }
+    .steps-section h3 {
+        font-size: 1.2em;
+        color: #333;
+        margin-bottom: 10px;
+    }
+    body.dark .steps-section h3 { color: #4CAF50; }
+    .steps-section p { color: #666; }
+    body.dark .steps-section p { color: #bbb; }
+
+    /* Kleiner Punkt für Marker */
+    .custom-marker {
+        width: 10px;
+        height: 10px;
+        background-color: #4CAF50;
+        border-radius: 50%;
+        box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.3);
+        transform: translate(-5px, -5px);
     }
 </style>
 </head>
@@ -116,7 +113,31 @@
     <button onclick="hideLoginModal()">Abbrechen</button>
 </div>
 
+
 <div id="map"></div>
+
+<section class="steps-section" aria-labelledby="steps-to-begin">
+    <div class="inner">
+        <h2 id="steps-to-begin">3 Schritte, um mit Deinem Abenteuer zu beginnen</h2>
+        <ol>
+            <li data-event-category="data" data-event-label="Begin step one">
+                <img src="/play/Content/images/lohp/illustrations/signal.svg" alt="">
+                <h3>1. Erstelle ein Benutzerkonto</h3>
+                <p>Erstelle entweder online oder über die Geocaching® App ein Benutzerkonto, um eine Karte aller Geocaches in Deiner Nähe zu sehen.</p>
+            </li>
+            <li data-event-category="data" data-event-label="Begin step two">
+                <img src="/play/Content/images/lohp/illustrations/phoneandpin.svg" alt="">
+                <h3>2. Finde einen Geocache</h3>
+                <p>Benutze die App um zu nahegelegenen Geocaches zu navigieren. Vergiss nicht einen Stift mitzunehmen!</p>
+            </li>
+            <li data-event-category="data" data-event-label="Begin step three">
+                <img src="/play/Content/images/lohp/illustrations/notebookpencil.svg" alt="">
+                <h3>3. Teile Deine Erfahrung</h3>
+                <p>Wenn Du den Geocache gefunden hast, trage Dich mit Namen und Datum ins Logbuch ein. Verstecke den Geocache wieder an derselben Stelle wo Du ihn gefunden hast und teile Deine Erfahrung online mit anderen.</p>
+            </li>
+        </ol>
+    </div>
+</section>
 
 <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
 <script>
@@ -133,41 +154,12 @@
         { name: "Hölli", coords: [48.7656, 15.0129], imageUrl: "https://example.com/hoelli.jpg" },
         { name: "Engerl", coords: [48.7658, 14.9825], imageUrl: "https://example.com/engerl.jpg" }
     ];
+
     punkte.forEach(({ name, coords, imageUrl }) => {
-        L.marker(coords).addTo(map).bindPopup(`<b>${name}</b><br><img src="${imageUrl}" alt="${name}" style="width:150px;">`);
+        const marker = L.divIcon({ className: 'custom-marker' });
+        L.marker(coords, { icon: marker }).addTo(map)
+            .bindPopup(`<b>${name}</b><br><img src="${imageUrl}" alt="${name}" style="width:150px;">`);
     });
-
-    // Dark/Light Mode umschalten
-    function toggleDarkMode() {
-        document.body.classList.toggle("dark");
-    }
-
-    // Dropdown-Menü umschalten
-    function toggleSettingsMenu() {
-        const menu = document.getElementById("settingsMenu");
-        menu.style.display = menu.style.display === "block" ? "none" : "block";
-    }
-
-    // Login-Modal anzeigen/verstecken
-    function showLoginModal() { document.getElementById('loginModal').style.display = 'block'; }
-    function hideLoginModal() { document.getElementById('loginModal').style.display = 'none'; }
-    
-    // Login-Funktion
-    function login() {
-        const username = document.getElementById('username').value;
-        const password = document.getElementById('password').value;
-        if (username === "admin" && password === "passwort") {
-            alert("Login erfolgreich");
-            hideLoginModal();
-        } else alert("Login fehlgeschlagen");
-    }
-
-    // Schließen des Menüs, wenn außerhalb geklickt wird
-    window.onclick = function(event) {
-        if (!event.target.matches('#settingsButton')) {
-            document.getElementById("settingsMenu").style.display = "none";
-        }
-    }
 </script>
 </body>
 </html>
